@@ -5,21 +5,22 @@ from app.cafe import Cafe
 def go_to_cafe(friends: list[dict], cafe: Cafe) -> str:
 
     masks_to_buy = 0
-    vaccinated = True
+    has_vaccine_error = False
 
     for friend in friends:
         try:
             cafe.visit_cafe(visitor=friend)
 
         except VaccineError:
-            vaccinated = False
+            has_vaccine_error = True
+            break
 
         except NotWearingMaskError:
             masks_to_buy += 1
 
     # Out part
 
-    if vaccinated is False:
+    if has_vaccine_error:
         return "All friends should be vaccinated"
 
     elif masks_to_buy:
